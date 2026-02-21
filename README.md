@@ -1,38 +1,100 @@
-# Authenticate to Google Cloud from GitHub Actions
+   # دليل إعداد وتشغيل منصة USDT-Trading-Platform على Android
 
-This GitHub Action authenticates to Google Cloud. It supports authentication via
-a Google Cloud Service Account Key JSON and authentication via [Workload
-Identity Federation][wif].
+---
 
-Workload Identity Federation is recommended over Service Account Keys as it
-obviates the need to export a long-lived credential and establishes a trust
-delegation relationship between a particular GitHub Actions workflow invocation
-and permissions on Google Cloud. There are three ways to set up this GitHub
-Action to authenticate to Google Cloud:
+## 1️⃣ تنزيل ملف ZIP من GitHub
 
-1. [(Preferred) Direct Workload Identity Federation](#direct-wif)
-1. [Workload Identity Federation through a Service Account](#indirect-wif)
-1. [Service Account Key JSON](#sake)
+افتح Termux واكتب:
 
-> [!IMPORTANT]
-> The `gsutil` command will **not** use the credentials exported by this GitHub
-> Action. Customers should use `gcloud storage` instead.
+```bash
+cd /sdcard/Download
+wget "https://github.com/USERNAME/USDT-Trading-Platform/releases/latest/download/USDT-Trading-Platform-Full-Auto.zip"
+```
 
-**This is not an officially supported Google product, and it is not covered by a
-Google Cloud support contract. To report bugs or request features in a Google
-Cloud product, please contact [Google Cloud
-support](https://cloud.google.com/support).**
+---
 
+## 2️⃣ فك الضغط
 
-## Prerequisites
+```bash
+unzip USDT-Trading-Platform-Full-Auto.zip -d ~/USDT-Trading-Platform
+cd ~/USDT-Trading-Platform
+```
 
--   Run the `actions/checkout@v4` step _before_ this action. Omitting the
-    checkout step or putting it after `auth` will cause future steps to be
-    unable to authenticate.
+---
 
--   To create binaries, containers, pull requests, or other releases, add the
-    following to your `.gitignore`, `.dockerignore` and similar files to prevent
-    accidentally committing credentials to your release artifact:
+## 3️⃣ إعطاء صلاحية التنفيذ
+
+```bash
+chmod +x full_auto_setup.sh
+```
+
+---
+
+## 4️⃣ تشغيل السكربت الموحد
+
+```bash
+./full_auto_setup.sh
+```
+
+---
+
+# ✅ ماذا يحدث بعد التشغيل؟
+
+- تثبيت Node.js و npm و pm2 تلقائيًا
+- تشغيل Backend دائم عبر pm2
+- تشغيل Frontend على IP الجهاز
+- إنشاء Release يومي على GitHub
+- رفع ZIP يوميًا إلى Google Drive الساعة 03:00 م
+
+---
+
+# 🔄 تحديث المنصة يدويًا (في أي وقت)
+
+```bash
+chmod +x update_and_run.sh
+./update_and_run.sh
+```
+
+---
+
+# 🌐 فتح المنصة من المتصفح
+
+بعد التشغيل سيظهر لك رابط مثل:
+
+```
+http://192.168.X.X:3000
+```
+
+افتحه من أي جهاز متصل بنفس الشبكة.
+
+---
+
+# 🕒 التحديث اليومي التلقائي
+
+تم ضبط Cron Job ليعمل يوميًا الساعة:
+
+```
+03:00 PM
+```
+
+وسيقوم بـ:
+- تحديث المشروع
+- إنشاء ZIP جديد
+- رفعه إلى GitHub
+- رفعه إلى Google Drive
+
+---
+
+# 📌 ملاحظات مهمة
+
+- تأكد من وضع اسم المستخدم و GitHub Token داخل:
+  full_auto_setup.sh
+- تأكد من إعداد rclone وربطه بـ Google Drive
+- لا تحذف مجلد المشروع بعد الإعداد
+
+---
+
+✔️ الآن يمكنك نسخ هذا الكود بالكامل واستخدامه كملف README.md أو تحويله إلى PDF مباشرة. accidentally committing credentials to your release artifact:
 
     ```text
     # Ignore generated credentials from google-github-actions/auth
@@ -680,3 +742,4 @@ These instructions use the [gcloud][gcloud] command-line tool.
 [map-external]: https://cloud.google.com/iam/docs/access-resources-oidc#impersonate
 [wif]: https://cloud.google.com/iam/docs/workload-identity-federation
 [security-considerations]: docs/SECURITY_CONSIDERATIONS.md
+<img width="1024" height="1536" alt="26201" src="https://github.com/user-attachments/assets/980f96e8-8c4d-4010-b92a-1efc0ca75ad0" />
